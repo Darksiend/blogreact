@@ -41,12 +41,21 @@ app.post("auth/login", async (req, res) => {
     const token = jwt.sign({ _id: user._id }, "secret123", {
       expiresIn: "30d",
     });
-  } catch (e) {}
+
+    const { passwordHash, ...userData } = user._doc;
+
+    res.json({ ...userData, token });
+  } catch (e) {
+    console.log(e);
+
+    res.status(500).json({ msg: "Error" });
+  }
 });
 
 app.post("/auth/register", registerValidation, async (req, res) => {
   try {
     const errors = validationResult(req);
+
     if (!errors.isEmpty()) {
       return res.status(400).json(errors.array());
     }
@@ -72,8 +81,8 @@ app.post("/auth/register", registerValidation, async (req, res) => {
     const { passwordHash, ...userData } = user._doc;
 
     res.json({ ...userData, token });
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    console.log(e);
 
     res.status(500).json({ msg: "Error" });
   }
