@@ -21,8 +21,26 @@ app.get("/", (req, res) => {
 
 app.use(express.json());
 
-app.post("auth/login", (req, res) => {
+app.post("auth/login", async (req, res) => {
   try {
+    const user = await UserModel.findOne({ email: req.body.email });
+
+    if (!user) {
+      return req.status(404).json({ msg: "No User" });
+    }
+
+    const isValidPassword = await bcrypt.compare(
+      req.body.password,
+      user._doc.passwordHash
+    );
+
+    if (!isValidPassword) {
+      return req.status(404).json({ msg: "No Password" });
+    }
+
+    const token = jwt.sign({ _id: user._id }, "secret123", {
+      expiresIn: "30d",
+    });
   } catch (e) {}
 });
 
@@ -33,8 +51,11 @@ app.post("/auth/register", registerValidation, async (req, res) => {
       return res.status(400).json(errors.array());
     }
     const password = req.body.password;
+
     const salt = await bcrypt.genSalt();
+
     const hash = await bcrypt.hash(password, salt);
+
     const doc = new UserModel({
       email: req.body.email,
       fullName: req.body.fullName,
@@ -43,6 +64,7 @@ app.post("/auth/register", registerValidation, async (req, res) => {
     });
 
     const user = await doc.save();
+
     const token = jwt.sign({ _id: user._id }, "secret123", {
       expiresIn: "30d",
     });
@@ -52,11 +74,13 @@ app.post("/auth/register", registerValidation, async (req, res) => {
     res.json({ ...userData, token });
   } catch (error) {
     console.log(error);
+
     res.status(500).json({ msg: "Error" });
   }
 });
 
 app.listen(port, (e) => {
   if (e) throw e;
+
   console.log("port: ", port);
 });
