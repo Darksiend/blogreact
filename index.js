@@ -5,6 +5,8 @@ import mongoose from "mongoose";
 import { registerValidation } from "./validations/auth.js";
 import { validationResult } from "express-validator";
 import UserModel from "./models/User.js";
+
+import checkAuth from "./utils/checkAuth.js";
 const port = 4444;
 const app = express();
 mongoose
@@ -21,12 +23,12 @@ app.get("/", (req, res) => {
 
 app.use(express.json());
 
-app.post("auth/login", async (req, res) => {
+app.post("/auth/login", async (req, res) => {
   try {
     const user = await UserModel.findOne({ email: req.body.email });
 
     if (!user) {
-      return req.status(404).json({ msg: "No User" });
+      return res.status(404).json({ msg: "No User" });
     }
 
     const isValidPassword = await bcrypt.compare(
@@ -35,7 +37,7 @@ app.post("auth/login", async (req, res) => {
     );
 
     if (!isValidPassword) {
-      return req.status(404).json({ msg: "No Password" });
+      return res.status(404).json({ msg: "No Password" });
     }
 
     const token = jwt.sign({ _id: user._id }, "secret123", {
@@ -86,6 +88,19 @@ app.post("/auth/register", registerValidation, async (req, res) => {
 
     res.status(500).json({ msg: "Error" });
   }
+});
+
+app.get("/auth/me", checkAuth, async (req, res) => {
+  try {
+    const user = await UserModel.findById(req.userId);
+
+    if (!user) {
+      return res.status(404).json({ msg: "no User" });
+    }
+    const { passwordHash, ...userData } = user._doc;
+
+    res.json({ ...userData, token });
+  } catch (e) {}
 });
 
 app.listen(port, (e) => {
