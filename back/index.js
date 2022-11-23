@@ -38,7 +38,7 @@ app.get("/auth/me", checkAuth, UserController.getMe);
 
 app.get("/posts", checkAuth, PostController.getAll);
 
-app.get("/posts", checkAuth, PostController.getOne);
+app.get("/posts/:id", checkAuth, PostController.getOne);
 
 app.post("/posts", checkAuth, postCreateValidation, PostController.create);
 

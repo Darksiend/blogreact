@@ -18,8 +18,8 @@ export const getOne = async (req, res) => {
       { $inc: { viewsCount: 1 } },
       { returnDocument: "after" },
       (err, doc) => {
-        if (e) {
-          console.log(e);
+        if (err) {
+          console.log(err);
           return res.status(500).json({ msg: "Cant Get this Pos t" });
         }
         if (!doc) {
@@ -30,7 +30,7 @@ export const getOne = async (req, res) => {
     );
   } catch (e) {
     console.log(e);
-    res.status(500).json({ msg: "Unsuccessful Get All Post" });
+    res.status(500).json({ msg: "Unsuccessful Get That Post" });
   }
 };
 
