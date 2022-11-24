@@ -4,10 +4,22 @@ export const getAll = async (req, res) => {
   try {
     const posts = await PostModel.find().populate("user").exec();
     res.json(posts);
-  } catch (e) {
-    console.log(e);
+  } catch (err) {
+    console.log(err);
     res.status(500).json({ msg: "Unsuccessful Get All Post" });
   }
+};
+
+export const remove = async (req, res) => {
+  try {
+    const postId = req.params.id;
+    PostModel.findOneAndDelete({ _id: postId }, (err, doc) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ msg: "Cant Get this Pos t" });
+      }
+    });
+  } catch (err) {}
 };
 
 export const getOne = async (req, res) => {
