@@ -45,9 +45,9 @@ app.get("/posts/:id", checkAuth, PostController.getOne);
 
 app.post("/posts", checkAuth, postCreateValidation, PostController.create);
 
-app.delete("/posts:id", checkAuth, PostController.remove);
-//
-// app.patch("/posts", checkAuth, PostController.update);
+app.delete("/posts/:id", checkAuth, PostController.remove);
+
+app.patch("/posts/:id", checkAuth, PostController.update);
 
 app.listen(port, (e) => {
   if (e) throw e;
