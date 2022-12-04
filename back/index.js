@@ -1,4 +1,5 @@
 import express from "express";
+import morgan from "morgan";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
@@ -15,6 +16,8 @@ import { UserController, PostController } from "./controllers/index.js";
 import handleValidationErrors from "./utils/handleValidationErrors.js";
 const port = 4444;
 const app = express();
+
+app.use(morgan("dev"));
 
 mongoose
   .connect(
@@ -59,9 +62,9 @@ app.post(
   PostController.create
 );
 
-// app.delete("/posts", checkAuth, PostController.remove);
-//
-// app.patch("/posts", checkAuth, PostController.update);
+app.delete("/posts/:id", checkAuth, PostController.remove);
+
+app.patch("/posts/:id", checkAuth, PostController.update);
 
 app.listen(port, (e) => {
   if (e) throw e;

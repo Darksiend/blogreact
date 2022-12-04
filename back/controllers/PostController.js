@@ -4,9 +4,29 @@ export const getAll = async (req, res) => {
   try {
     const posts = await PostModel.find().populate("user").exec();
     res.json(posts);
-  } catch (e) {
-    console.log(e);
+  } catch (err) {
+    console.log(err);
     res.status(500).json({ msg: "Unsuccessful Get All Post" });
+  }
+};
+
+export const remove = async (req, res) => {
+  try {
+    const postId = req.params.id;
+    PostModel.findOneAndDelete({ _id: postId }, (err, doc) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ msg: "Cant Delete this Post" });
+      }
+
+      if (!doc) {
+        return res.status(404).json({ msg: "Post not consist" });
+      }
+
+      res.json({ success: true });
+    });
+  } catch (err) {
+    console.log(err);
   }
 };
 
@@ -50,5 +70,25 @@ export const create = async (req, res) => {
   } catch (e) {
     console.log(e);
     res.status(500).json({ msg: "Unsuccessful creating Post" });
+  }
+};
+
+export const update = async (req, res) => {
+  try {
+    const postId = req.params.id;
+    await PostModel.updateOne(
+      { _id: postId },
+      {
+        title: req.body.title,
+        text: req.body.title,
+        imageUrl: req.body.imageUrl,
+        tags: req.body.tags,
+        user: req.userId,
+      }
+    );
+    res.json({ success: true });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ msg: "Unsuccessful Update Post" });
   }
 };
