@@ -11,8 +11,8 @@ import { validationResult } from "express-validator";
 import UserModel from "./models/User.js";
 
 import checkAuth from "./utils/checkAuth.js";
-import * as UserController from "./controllers/userController.js";
-import * as PostController from "./controllers/PostController.js";
+import { UserController, PostController } from "./controllers/index.js";
+import handleValidationErrors from "./utils/handleValidationErrors.js";
 const port = 4444;
 const app = express();
 
@@ -30,9 +30,20 @@ app.get("/", (req, res) => {
 
 app.use(express.json());
 
-app.post("/auth/login", loginValidation, UserController.login);
+app.post(
+  "/auth/login",
 
-app.post("/auth/register", registerValidation, UserController.register);
+  loginValidation,
+  handleValidationErrors,
+  UserController.login
+);
+
+app.post(
+  "/auth/register",
+  registerValidation,
+  handleValidationErrors,
+  UserController.register
+);
 
 app.get("/auth/me", checkAuth, UserController.getMe);
 
@@ -40,7 +51,13 @@ app.get("/posts", checkAuth, PostController.getAll);
 
 app.get("/posts/:id", checkAuth, PostController.getOne);
 
-app.post("/posts", checkAuth, postCreateValidation, PostController.create);
+app.post(
+  "/posts",
+  checkAuth,
+  postCreateValidation,
+  handleValidationErrors,
+  PostController.create
+);
 
 // app.delete("/posts", checkAuth, PostController.remove);
 //
@@ -49,5 +66,5 @@ app.post("/posts", checkAuth, postCreateValidation, PostController.create);
 app.listen(port, (e) => {
   if (e) throw e;
 
-  console.log("port: ", port);
+  console.log("port:", port);
 });

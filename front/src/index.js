@@ -1,4 +1,5 @@
 import React from "react";
+import { BrowserRouter } from "react-router-dom";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -19,7 +20,9 @@ root.render(
         ComponentPreviews={ComponentPreviews}
         useInitialHook={useInitial}
       >
-        <App />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </DevSupport>
     </ThemeProvider>
   </React.StrictMode>

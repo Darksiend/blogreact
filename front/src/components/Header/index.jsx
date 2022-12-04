@@ -1,8 +1,8 @@
-import React from 'react';
-import Button from '@mui/material/Button';
-
-import styles from './Header.module.scss';
-import Container from '@mui/material/Container';
+import React from "react";
+import Button from "@mui/material/Button";
+import { Link } from "react-router-dom";
+import styles from "./Header.module.scss";
+import Container from "@mui/material/Container";
 
 export const Header = () => {
   const isAuth = false;
@@ -13,27 +13,31 @@ export const Header = () => {
     <div className={styles.root}>
       <Container maxWidth="lg">
         <div className={styles.inner}>
-          <a className={styles.logo} href="/">
-            <div>ARCHAKOV BLOG</div>
-          </a>
+          <Link className={styles.logo} to="/">
+            <div>Anton's Blog</div>
+          </Link>
           <div className={styles.buttons}>
             {isAuth ? (
               <>
-                <a href="/posts/create">
-                  <Button variant="contained">Написать статью</Button>
-                </a>
-                <Button onClick={onClickLogout} variant="contained" color="error">
-                  Выйти
+                <link to="/posts/create">
+                  <Button variant="contained">Create Post</Button>
+                </link>
+                <Button
+                  onClick={onClickLogout}
+                  variant="contained"
+                  color="error"
+                >
+                  Sign Out
                 </Button>
               </>
             ) : (
               <>
-                <a href="/login">
-                  <Button variant="outlined">Войти</Button>
-                </a>
-                <a href="/register">
-                  <Button variant="contained">Создать аккаунт</Button>
-                </a>
+                <Link to="/login">
+                  <Button variant="outlined">Sign In</Button>
+                </Link>
+                <Link to="/register">
+                  <Button variant="contained">Sign Up</Button>
+                </Link>
               </>
             )}
           </div>
