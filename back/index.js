@@ -2,6 +2,7 @@ import express from "express";
 import morgan from "morgan";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import cors from "cors";
 import mongoose from "mongoose";
 import {
   registerValidation,
@@ -32,7 +33,7 @@ app.get("/", (req, res) => {
 });
 
 app.use(express.json());
-
+app.use(cors());
 app.post(
   "/auth/login",
 
@@ -50,7 +51,7 @@ app.post(
 
 app.get("/auth/me", checkAuth, UserController.getMe);
 
-app.get("/posts", checkAuth, PostController.getAll);
+app.get("/posts", PostController.getAll);
 
 app.get("/posts/:id", checkAuth, PostController.getOne);
 

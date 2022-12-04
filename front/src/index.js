@@ -14,7 +14,7 @@ import { Provider } from "react-redux";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
-  <React.StrictMode>
+  <>
     <CssBaseline />
     <ThemeProvider theme={theme}>
       <DevSupport
@@ -28,5 +28,5 @@ root.render(
         </BrowserRouter>
       </DevSupport>
     </ThemeProvider>
-  </React.StrictMode>
+  </>
 );
