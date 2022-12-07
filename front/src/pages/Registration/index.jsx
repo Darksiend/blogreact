@@ -7,7 +7,11 @@ import Avatar from "@mui/material/Avatar";
 
 import styles from "./Login.module.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAuth, selectIsAuth } from "../../redux/slices/auth";
+import {
+  fetchAuth,
+  fetchRegister,
+  selectIsAuth,
+} from "../../redux/slices/auth";
 import { useForm } from "react-hook-form";
 import { Navigate } from "react-router-dom";
 
@@ -28,15 +32,15 @@ export const Registration = () => {
     mode: "onChange",
   });
   const onSubmit = async (values) => {
-    // const data = await dispatch(fetchRegister(values));
-    // if (!data.payload) {
-    //   return alert("Cant Auth");
-    // }
-    // if ("token" in data.payload) {
-    //   window.localStorage.setItem("token", data.payload.token);
-    // } else {
-    //   alert("Cant log in!");
-    // }
+    const data = await dispatch(fetchRegister(values));
+    if (!data.payload) {
+      return alert("Cant Auth");
+    }
+    if ("token" in data.payload) {
+      window.localStorage.setItem("token", data.payload.token);
+    } else {
+      alert("Cant log in!");
+    }
   };
 
   if (isAuth) {
@@ -44,7 +48,7 @@ export const Registration = () => {
   }
   return (
     <Paper classes={{ root: styles.root }}>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         {" "}
         <Typography classes={{ root: styles.title }} variant="h5">
           Создание аккаунта
