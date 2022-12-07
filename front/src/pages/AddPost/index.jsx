@@ -24,16 +24,17 @@ export const AddPost = () => {
 
   const onSubmit = async () => {
     try {
-      setLoading(true);
       const fields = { title, tags, text };
       const { data } = await axios.post("/posts", fields);
       const id = data._id;
       navigate(`/posts/${id}`);
-    } catch (err) {}
+    } catch (err) {
+      console.warn("Cant create post");
+    }
   };
 
   const onChange = React.useCallback((value) => {
-    setValue(value);
+    setText(value);
   }, []);
 
   const options = React.useMemo(
