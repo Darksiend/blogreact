@@ -50,7 +50,7 @@ export const getOne = async (req, res) => {
     const postId = req.params.id;
     PostModel.findOneAndUpdate(
       { _id: postId },
-      { $inc: { viewsCount: 1 } },
+      { $inc: { viewCount: 1 } },
       { returnDocument: "after" },
       (err, doc) => {
         if (err) {
