@@ -27,6 +27,9 @@ export const Login = () => {
 
   const onSubmit = async (values) => {
     const data = await dispatch(fetchAuth(values));
+    if (!data.payload) {
+      return alert("Cant Auth");
+    }
     if ("token" in data.payload) {
       window.localStorage.setItem("token", data.payload.token);
     } else {
