@@ -6,8 +6,12 @@ import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form";
 
 import styles from "./Login.module.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAuth, selectIsAuth } from "../../redux/slices/auth";
 
 export const Login = () => {
+  const isAuth = useSelector(selectIsAuth);
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -15,15 +19,16 @@ export const Login = () => {
     formState: { errors, isValid },
   } = useForm({
     defaultValues: {
-      email: "",
-      password: "",
+      email: "logosmk2@gmail.com",
+      password: "123456",
     },
-    mode: "onChang e",
+    mode: "onChange",
   });
 
   const onSubmit = (values) => {
-    console.log(values);
+    dispatch(fetchAuth(values));
   };
+  console.log("isAuth", isAuth);
   return (
     <Paper classes={{ root: styles.root }}>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -31,6 +36,7 @@ export const Login = () => {
           Вход в аккаунт
         </Typography>
         <TextField
+          type="email"
           className={styles.field}
           label="E-Mail"
           error={Boolean(errors.email?.message)}
