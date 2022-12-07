@@ -1,9 +1,13 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
 import axios from "../../axios";
-export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
-  const { data } = await axios.get("/posts");
-  return data;
-});
+export const fetchPosts = createAsyncThunk(
+  "posts/fetchPosts",
+  async (state) => {
+    const { data } = await axios.get("/posts");
+    console.log(current(state));
+    return data;
+  }
+);
 
 const initialState = {
   posts: { items: [], status: "loading" },
