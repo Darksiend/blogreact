@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
@@ -13,6 +13,8 @@ export const AddPost = () => {
   const isAuth = useSelector(selectIsAuth);
   const imageUrl = "";
   const [value, setValue] = React.useState("");
+  const [title, setTitle] = useState("");
+  const [tags, setTags] = useState("");
 
   const handleChangeFile = () => {};
 
@@ -27,7 +29,7 @@ export const AddPost = () => {
       spellChecker: false,
       maxHeight: "400px",
       autofocus: true,
-      placeholder: "Введите текст...",
+      placeholder: "`Text`...",
       status: false,
       autosave: {
         enabled: true,
@@ -37,15 +39,15 @@ export const AddPost = () => {
     []
   );
 
-  if (!isAuth) {
+  if (!localStorage.getItem("token") && !isAuth) {
     return <Navigate to="/" />;
   }
 
   return (
     <Paper style={{ padding: 30 }}>
-      <Button variant="outlined" size="large">
-        Загрузить превью
-      </Button>
+      {/*<Button variant="outlined" size="large">*/}
+      {/*  Upload Photo*/}
+      {/*</Button>*/}
       <input type="file" onChange={handleChangeFile} hidden />
       {imageUrl && (
         <Button variant="contained" color="error" onClick={onClickRemoveImage}>
@@ -64,13 +66,13 @@ export const AddPost = () => {
       <TextField
         classes={{ root: styles.title }}
         variant="standard"
-        placeholder="Заголовок статьи..."
+        placeholder="Title..."
         fullWidth
       />
       <TextField
         classes={{ root: styles.tags }}
         variant="standard"
-        placeholder="Тэги"
+        placeholder="Tags"
         fullWidth
       />
       <SimpleMDE
@@ -81,10 +83,10 @@ export const AddPost = () => {
       />
       <div className={styles.buttons}>
         <Button size="large" variant="contained">
-          Опубликовать
+          Public
         </Button>
         <a href="/">
-          <Button size="large">Отмена</Button>
+          <Button size="large">Cancel</Button>
         </a>
       </div>
     </Paper>
