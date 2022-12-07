@@ -58,36 +58,27 @@ export const Registration = () => {
         </div>
         <TextField
           type="text"
-          className={styles.field}
-          label="Full Name"
           error={Boolean(errors.fullName?.message)}
           helperText={errors.fullName?.message}
           {...register("fullName", { required: "Put fullName" })}
-          fullWidth
           className={styles.field}
           label="Full Name"
           fullWidth
         />
         <TextField
           type="email"
-          className={styles.field}
-          label="E-Mail"
           error={Boolean(errors.email?.message)}
           helperText={errors.email?.message}
           {...register("email", { required: "Put Email" })}
-          fullWidth
           className={styles.field}
           label="E-Mail"
           fullWidth
         />
         <TextField
           type="password"
-          className={styles.field}
-          label="E-Mail"
           error={Boolean(errors.password?.message)}
           helperText={errors.password?.message}
           {...register("password", { required: "Put Password" })}
-          fullWidth
           className={styles.field}
           label="Password"
           fullWidth
