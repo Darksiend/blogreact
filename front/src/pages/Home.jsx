@@ -10,7 +10,7 @@ import axios from "../axios";
 import { fetchPosts, fetchTags } from "../redux/slices/posts";
 export const Home = () => {
   const dispatch = useDispatch();
-  const UserData = useSelector((state) => state.auth.data);
+  const userData = useSelector((state) => state.auth.data);
   const { posts, tags } = useSelector((state) => state.posts);
   const isPostsLoading = posts.status === "loading";
   const isTagsLoading = tags.status === "loading";
@@ -47,7 +47,7 @@ export const Home = () => {
                 viewsCount={post.viewCount}
                 commentsCount={3}
                 tags={post.tags}
-                isEditable
+                isEditable={userData?._id === post.user._id}
               />
             )
           )}
