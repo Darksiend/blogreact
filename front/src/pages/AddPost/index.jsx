@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
@@ -7,34 +7,44 @@ import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 import styles from "./AddPost.module.scss";
 import { selectIsAuth } from "../../redux/slices/auth";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "../../axios";
 export const AddPost = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
   const isAuth = useSelector(selectIsAuth);
   const imageUrl = "";
+  const isEditing = Boolean(id);
   const [text, setText] = React.useState("");
   const [title, setTitle] = useState("");
   const [tags, setTags] = useState("");
-
-  const handleChangeFile = () => {};
-
-  const onClickRemoveImage = () => {};
-
+  React.useEffect(() => {
+    if (id) {
+      axios.get(`posts/${id}`).then(({ data }) => {
+        setTitle(data.title);
+        setText(data.text);
+        setTags(data.tags);
+      });
+    }
+  }, []);
   const onSubmit = async () => {
     try {
       const fields = { title, tags, text };
-      const { data } = await axios.post("/posts", fields);
-      const id = data._id;
-      navigate(`/posts/${id}`);
+      console.log(fields);
+      const { data } = isEditing
+        ? await axios.patch(`/posts/${id}`, fields)
+        : await axios.post("/posts", fields);
+      const _id = isEditing ? id : data._id;
+      navigate(`/posts/${_id}`);
     } catch (err) {
       console.warn("Cant create post");
     }
   };
 
-  const onChange = React.useCallback((value) => {
-    setText(value);
+  const onChange = React.useCallback((text) => {
+    setText(text);
+    console.log(text);
   }, []);
 
   const options = React.useMemo(
@@ -94,7 +104,7 @@ export const AddPost = () => {
       />
       <div className={styles.buttons}>
         <Button onClick={onSubmit} size="large" variant="contained">
-          Public
+          {isEditing ? "Save" : "Upload"}
         </Button>
         <a href="/">
           <Button size="large">Cancel</Button>

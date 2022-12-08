@@ -26,7 +26,9 @@ const initialState = {
 const postSlice = createSlice({
   name: "posts",
   initialState,
-  reducers: {},
+  reducers: {
+    sortByViews(state) {},
+  },
   extraReducers: {
     [fetchPosts.pending]: (state) => {
       state.posts.status = "loading";
@@ -59,5 +61,5 @@ const postSlice = createSlice({
     },
   },
 });
-
+export const { sortByViews } = postSlice.actions;
 export const postsReducer = postSlice.reducer;
