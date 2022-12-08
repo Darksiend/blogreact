@@ -25,9 +25,9 @@ export const Registration = () => {
     formState: { errors, isValid },
   } = useForm({
     defaultValues: {
-      fullName: "Anton Chesnokov",
-      email: "test@gmail.com",
-      password: "123456",
+      fullName: "",
+      email: "",
+      password: "",
     },
     mode: "onChange",
   });
@@ -51,7 +51,7 @@ export const Registration = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         {" "}
         <Typography classes={{ root: styles.title }} variant="h5">
-          Создание аккаунта
+          Creating Account.
         </Typography>
         <div className={styles.avatar}>
           <Avatar sx={{ width: 100, height: 100 }} />
