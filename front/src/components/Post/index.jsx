@@ -17,7 +17,6 @@ export const Post = ({
   id,
   title,
   createdAt,
-  imageUrl,
   user,
   viewsCount,
   commentsCount,

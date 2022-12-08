@@ -18,6 +18,7 @@ export const FullPost = () => {
         setData(r.data);
         setIsLoading(false);
       })
+
       .catch((err) => {
         console.warn(err);
         alert("Error with getting post!");
@@ -38,7 +39,7 @@ export const FullPost = () => {
         user={{
           avatarUrl:
             "https://res.cloudinary.com/practicaldev/image/fetch/s--uigxYVRB--/c_fill,f_auto,fl_progressive,h_50,q_auto,w_50/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/187971/a5359a24-b652-46be-8898-2c5df32aa6e0.png",
-          fullName: "Keff",
+          fullName: data.fullname,
         }}
         createdAt={data.createdAt}
         viewsCount={data.viewCount}

@@ -15,14 +15,15 @@ import UserModel from "./models/User.js";
 import checkAuth from "./utils/checkAuth.js";
 import { UserController, PostController } from "./controllers/index.js";
 import handleValidationErrors from "./utils/handleValidationErrors.js";
-const port = 4444;
+const port = process.env.PORT || 4444;
 const app = express();
 
 app.use(morgan("dev"));
 
 mongoose
   .connect(
-    "mongodb+srv://darksiend:123@mycluster.eswzs4i.mongodb.net/blog?retryWrites=true&w=majority"
+    process.env.MONGO_URL
+    // "mongodb+srv://darksiend:123@mycluster.eswzs4i.mongodb.net/blog?retryWrites=true&w=majority"
   )
   .then(() => {
     console.log("DB Ok!");
