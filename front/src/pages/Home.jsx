@@ -25,6 +25,7 @@ export const Home = () => {
   };
 
   if (!isPostsLoading && tabIndex === 1) {
+    dispatch(sortByViews());
   }
 
   return (
