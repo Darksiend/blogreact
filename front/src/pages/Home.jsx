@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Grid from "@mui/material/Grid";
@@ -14,17 +14,26 @@ export const Home = () => {
   const { posts, tags } = useSelector((state) => state.posts);
   const isPostsLoading = posts.status === "loading";
   const isTagsLoading = tags.status === "loading";
+  const [tabIndex, setTabIndex] = useState(0);
   React.useEffect(() => {
     dispatch(fetchPosts());
     dispatch(fetchTags());
   }, []);
-  const sortByViews = () => {};
+
+  const handleTabChange = (event, newTabIndex) => {
+    setTabIndex(newTabIndex);
+  };
+
+  if (!isPostsLoading && tabIndex === 1) {
+  }
+
   return (
     <>
       <Tabs
         style={{ marginBottom: 15 }}
-        value={0}
+        value={tabIndex}
         aria-label="basic tabs example"
+        onChange={handleTabChange}
       >
         <Tab label="New" />
         <Tab label="Popular" />
