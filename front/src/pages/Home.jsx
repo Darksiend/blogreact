@@ -7,7 +7,12 @@ import { Post } from "../components/Post";
 import { TagsBlock } from "../components/TagsBlock";
 import { CommentsBlock } from "../components/CommentsBlock";
 import axios from "../axios";
-import { fetchPosts, fetchTags, sortByViews } from "../redux/slices/posts";
+import {
+  fetchPosts,
+  fetchTags,
+  sortByCreateDate,
+  sortByViews,
+} from "../redux/slices/posts";
 export const Home = () => {
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.auth.data);
@@ -26,6 +31,10 @@ export const Home = () => {
 
   if (!isPostsLoading && tabIndex === 1) {
     dispatch(sortByViews());
+  }
+
+  if (!isPostsLoading && tabIndex === 0) {
+    dispatch(sortByCreateDate());
   }
 
   return (

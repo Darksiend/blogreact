@@ -32,6 +32,11 @@ const postSlice = createSlice({
         return new Date(b.viewCount) - new Date(a.viewCount);
       });
     },
+    sortByCreateDate(state) {
+      state.posts.items.sort((a, b) => {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      });
+    },
   },
   extraReducers: {
     [fetchPosts.pending]: (state) => {
@@ -65,5 +70,5 @@ const postSlice = createSlice({
     },
   },
 });
-export const { sortByViews } = postSlice.actions;
+export const { sortByViews, sortByCreateDate } = postSlice.actions;
 export const postsReducer = postSlice.reducer;
