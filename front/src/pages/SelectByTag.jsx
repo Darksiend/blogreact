@@ -9,6 +9,7 @@ import { CommentsBlock } from "../components/CommentsBlock";
 import axios from "../axios";
 import { fetchPosts, fetchTags, sortByViews } from "../redux/slices/posts";
 import { useParams } from "react-router-dom";
+import TagIcon from "@mui/icons-material/Tag";
 export const SelectByTag = () => {
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.auth.data);
@@ -24,22 +25,15 @@ export const SelectByTag = () => {
   const sortByViews = () => {};
   return (
     <>
-      <Tabs
-        style={{ marginBottom: 15 }}
-        value={0}
-        aria-label="basic tabs example"
-      >
-        <Tab label="New" />
-        <Tab label="Popular" />
-      </Tabs>
+      <div>
+        <h1>All posts with #{tag}</h1>
+      </div>
 
       <Grid container spacing={4}>
         <Grid xs={8} item>
           {(isPostsLoading
             ? [...Array(5)]
-            : posts.items.filter((item) => {
-                item.tags.includes(tag);
-              })
+            : posts.items.filter((item) => item.tags.includes(tag))
           ).map((post, index) =>
             isPostsLoading ? (
               <Post key={index} isLoading={true} />
