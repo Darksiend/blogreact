@@ -18,7 +18,6 @@ export const FullPost = () => {
         setData(r.data);
         setIsLoading(false);
       })
-
       .catch((err) => {
         console.warn(err);
         alert("Error with getting post!");
