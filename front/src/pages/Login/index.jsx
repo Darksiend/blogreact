@@ -40,7 +40,7 @@ export const Login = () => {
   if (isAuth) {
     return <Navigate to="/" />;
   }
-  console.log("isAuth", isAuth);
+
   return (
     <Paper classes={{ root: styles.root }}>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -58,7 +58,7 @@ export const Login = () => {
         />
         <TextField
           className={styles.field}
-          label="Пароль"
+          label="Password"
           error={Boolean(errors.password?.message)}
           helperText={errors.password?.message}
           {...register("password", { required: "Put Password" })}
