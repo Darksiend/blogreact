@@ -1,0 +1,14 @@
+Hi Anton! 
+
+I'll start by saying that I absolutely loved your blog project! It is clean, user-friendly and intuitive.
+
+- I love the use of different libraries
+
+- Your filing system is absolutely amazing, all organized and simple to understand and navigate.
+
+- Make sure to clean out unnecessary code lines, like things you import and dont use, console logs ecc
+
+- Try to integrate more comments of your steps
+
+Overall, I loved your project, your code is clean and understandable, very good use of redux and other libraries
+Well done Anton!
